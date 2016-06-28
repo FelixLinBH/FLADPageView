@@ -32,11 +32,11 @@ TODO: Add long description of the pod here.
 
   s.source_files = 'FLADPageView/Classes/**/*'
   
-  # s.resource_bundles = {
-  #   'FLADPageView' => ['FLADPageView/Assets/*.png']
-  # }
+  s.resource_bundles = {
+    'FLADPageView' => ['FLADPageView/Assets/*.png','FLADPageView/Assets/*.jpg']
+  }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.public_header_files = 'FLADPageView/Classes/**/*.h'
+  s.frameworks = 'UIKit'
+  s.dependency 'Masonry'
 end

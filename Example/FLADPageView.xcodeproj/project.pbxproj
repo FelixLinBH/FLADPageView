@@ -21,6 +21,7 @@
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
+		9453B14B1D227CCF008FA815 /* FLLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9453B14A1D227CCF008FA815 /* FLLViewController.m */; };
 		B739228DC402A53D98CD9278 /* Pods_FLADPageView_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56BEB42B8C8629B5E869D4D7 /* Pods_FLADPageView_Tests.framework */; };
 		B93C0BECA0DF37DC7DCB5057 /* Pods_FLADPageView_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E94C15898499CF9B2B5B722D /* Pods_FLADPageView_Example.framework */; };
 /* End PBXBuildFile section */
@@ -61,6 +62,8 @@
 		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		9453B1491D227CCF008FA815 /* FLLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLLViewController.h; sourceTree = "<group>"; };
+		9453B14A1D227CCF008FA815 /* FLLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLLViewController.m; sourceTree = "<group>"; };
 		D273ACB8A4E2740E3C36F733 /* Pods-FLADPageView_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FLADPageView_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FLADPageView_Tests/Pods-FLADPageView_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		E94C15898499CF9B2B5B722D /* Pods_FLADPageView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FLADPageView_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF9D6CFB7B9EA045E7B5CDB5 /* FLADPageView.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = FLADPageView.podspec; path = ../FLADPageView.podspec; sourceTree = "<group>"; };
@@ -148,6 +151,8 @@
 				6003F5A6195388D20070C39A /* FLViewController.m */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
+				9453B1491D227CCF008FA815 /* FLLViewController.h */,
+				9453B14A1D227CCF008FA815 /* FLLViewController.m */,
 			);
 			name = "Example for FLADPageView";
 			path = FLADPageView;
@@ -393,6 +398,7 @@
 				6003F59E195388D20070C39A /* FLAppDelegate.m in Sources */,
 				6003F5A7195388D20070C39A /* FLViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
+				9453B14B1D227CCF008FA815 /* FLLViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
