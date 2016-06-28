@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'FLADPageView_Example' do
+  pod 'FLADPageView', :path => '../'
+
+  target 'FLADPageView_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
