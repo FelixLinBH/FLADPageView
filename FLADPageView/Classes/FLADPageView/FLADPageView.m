@@ -17,6 +17,7 @@
 @property (nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic, weak) NSTimer *timer;
 @property (nonatomic, assign) BOOL isTouch;
+@property (nonatomic, assign) BOOL isAdjustContentSize;
 @end
 
 @implementation FLADPageView
@@ -49,11 +50,17 @@
 - (void)layoutSubviews{
     [super layoutSubviews];
     
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.dataSource.count, self.scrollView.frame.size.height);
+    _isAdjustContentSize = YES;
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * (self.dataSource.count + 2), self.scrollView.frame.size.height);
     
-    [self scrollToPageWithIndex:self.pageControl.currentPage];
+    if (!self.scrollView.contentOffset.x) {
+        self.scrollView.contentOffset = CGPointMake(CGRectGetWidth(self.scrollView.frame), 0);
+    }else{
+        [self scrollToPageWithIndex:self.pageControl.currentPage + 1];
+    }
     
 }
+
 
 - (void)updateConstraints {
     
@@ -118,11 +125,17 @@
 - (void)addContentView:(NSArray *)dataSource{
     UIView *lastView;
     
-    for (int i = 0; i < [dataSource count]; i++) {
+    for (int i = 0; i < [dataSource count] + 2; i++) {
         UIImageView *imageView = [[UIImageView alloc]init];
         imageView.contentMode = UIViewContentModeScaleToFill;
-        
-        imageView.image = [UIImage imageNamed:dataSource[i]];
+        if (i == 0) {
+            imageView.image = [UIImage imageNamed:dataSource.lastObject];
+        }else if (i == [dataSource count] + 1) {
+            imageView.image = [UIImage imageNamed:dataSource.firstObject];
+        }else{
+            imageView.image = [UIImage imageNamed:dataSource[i-1]];
+        }
+    
         [self.scrollView addSubview:imageView];
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.height.equalTo(self.scrollView.mas_height);
@@ -160,35 +173,50 @@
         return;
     }
     
-    NSInteger nextIndex = self.pageControl.currentPage + 1;
-    if (nextIndex <= [self.dataSource count]) {
-        [self scrollToPageWithIndex:nextIndex];
-    }
-    
+    NSInteger nextIndex = self.pageControl.currentPage + 2;
+    [self scrollToPageWithIndex:nextIndex];
+ 
 }
 
 - (void)scrollToPageWithIndex:(NSInteger)index {
+
     [self.scrollView scrollRectToVisible:CGRectMake(CGRectGetWidth(self.scrollView.frame) * index, 0, CGRectGetWidth(self.scrollView.frame), CGRectGetHeight(self.scrollView.frame)) animated:YES];
 }
 
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event{
-    _isTouch = YES;
-    return [super hitTest:point withEvent:event];
-    
-}
-#pragma mark - ScrollView delegate
+#pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    NSInteger pageIndex = scrollView.contentOffset.x / CGRectGetWidth(scrollView.frame);
-    self.pageControl.currentPage = pageIndex;
+    if (_isAdjustContentSize) {
+        _isAdjustContentSize = NO;
+        return;
+    }
     
+    NSInteger pageIndex = (scrollView.contentOffset.x - CGRectGetWidth(scrollView.frame)) / CGRectGetWidth(scrollView.frame);
+    if ([self.dataSource count] == pageIndex) {
+        self.pageControl.currentPage = 0;
+        [self.scrollView scrollRectToVisible:CGRectMake(CGRectGetWidth(self.scrollView.frame) * (self.pageControl.currentPage + 1), 0, CGRectGetWidth(self.scrollView.frame), CGRectGetHeight(self.scrollView.frame)) animated:NO];
+    }else if(pageIndex == -1){
+        self.pageControl.currentPage = [self.dataSource count] - 1;
+        [self.scrollView scrollRectToVisible:CGRectMake(CGRectGetWidth(self.scrollView.frame) * (self.pageControl.currentPage + 1), 0, CGRectGetWidth(self.scrollView.frame), CGRectGetHeight(self.scrollView.frame)) animated:NO];
+    }else{
+        self.pageControl.currentPage = pageIndex;
+    }
+    
+    
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    _isTouch = YES;
+}
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    _isTouch = NO;
 }
 
 #pragma mark - TAPageControl delegate
 - (void)TAPageControl:(TAPageControl *)pageControl didSelectPageAtIndex:(NSInteger)index{
     
-    [self scrollToPageWithIndex:index];
+    [self scrollToPageWithIndex:index + 1];
 }
 
 
