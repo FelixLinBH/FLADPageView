@@ -9,6 +9,10 @@
 #import "FLADPageView.h"
 #import "TAPageControl.h"
 #import "Masonry.h"
+#import "DFImageManager/DFImageManagerKit.h"
+#import "DFImageManager/DFImageManagerKit+UI.h"
+#import "DFImageManager/DFImageManagerKit+AFNetworking.h"
+#import "DFImageManager/DFImageManagerKit+GIF.h"
 #define DefaultDotHeight 15
 #define DefaultAutoScrollTimeInterval 3
 @interface FLADPageView()
@@ -38,13 +42,15 @@
         [_scrollView addGestureRecognizer:_tapGestureRecognizer];
         _pageControl = [[TAPageControl alloc]init];
         _pageControl.delegate = self;
-        
-        
         [self addSubview:_scrollView];
-        
         [self addSubview:_pageControl];
+        [DFImageManagerConfiguration setAllowsProgressiveImage:YES];
     }
     return self;
+}
+
+- (void)dealloc{
+     [DFImageManagerConfiguration setAllowsProgressiveImage:NO];
 }
 
 - (void)layoutSubviews{
@@ -126,16 +132,20 @@
     UIView *lastView;
     
     for (int i = 0; i < [dataSource count] + 2; i++) {
-        UIImageView *imageView = [[UIImageView alloc]init];
-        imageView.contentMode = UIViewContentModeScaleToFill;
+        DFAnimatedImageView *imageView = [[DFAnimatedImageView alloc]init];
+        
+//        imageView.contentMode = UIViewContentModeScaleToFill;
         if (i == 0) {
-            imageView.image = [UIImage imageNamed:dataSource.lastObject];
+            [self loadImageView:imageView UrlString:dataSource[([dataSource count] - 1)]];
+//            imageView.image = [UIImage imageNamed:dataSource.lastObject];
         }else if (i == [dataSource count] + 1) {
-            imageView.image = [UIImage imageNamed:dataSource.firstObject];
+            [self loadImageView:imageView UrlString:dataSource[0]];
+//            imageView.image = [UIImage imageNamed:dataSource.firstObject];
         }else{
-            imageView.image = [UIImage imageNamed:dataSource[i-1]];
+            [self loadImageView:imageView UrlString:dataSource[i-1]];
+//            imageView.image = [UIImage imageNamed:dataSource[i-1]];
         }
-    
+        
         [self.scrollView addSubview:imageView];
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.height.equalTo(self.scrollView.mas_height);
@@ -143,9 +153,27 @@
             make.top.equalTo(self.scrollView.mas_top);
             make.left.equalTo(lastView ? lastView.mas_right : self.scrollView.mas_left);
         }];
+        
         lastView = imageView;
     }
 
+}
+
+- (DFImageView *)createImageViewWithUrlString:(NSString *)urlString{
+    DFImageView *imageView;
+    if ([[urlString pathExtension]isEqualToString:@"gif"]) {
+        imageView = [[DFImageView alloc]init];
+    }else{
+        imageView = [[DFAnimatedImageView alloc]init];
+    }
+    return imageView;
+}
+
+
+- (void)loadImageView:(DFImageView *)imageView UrlString:(NSString *)urlString{
+    
+    [imageView prepareForReuse];
+    [imageView setImageWithResource:[NSURL  URLWithString:urlString] targetSize:DFImageMaximumSize contentMode:DFImageContentModeAspectFill options:nil];
 }
 
 - (void)didTapView {

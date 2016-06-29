@@ -39,4 +39,7 @@ TODO: Add long description of the pod here.
   s.public_header_files = 'FLADPageView/Classes/**/*.h'
   s.frameworks = 'UIKit'
   s.dependency 'Masonry'
+  s.dependency 'DFImageManager'
+  s.dependency 'DFImageManager/AFNetworking'
+  s.dependency 'DFImageManager/GIF'
 end
