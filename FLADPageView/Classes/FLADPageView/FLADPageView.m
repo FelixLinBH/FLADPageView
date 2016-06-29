@@ -9,10 +9,10 @@
 #import "FLADPageView.h"
 #import "TAPageControl.h"
 #import "Masonry.h"
-#import "DFImageManager/DFImageManagerKit.h"
-#import "DFImageManager/DFImageManagerKit+UI.h"
-#import "DFImageManager/DFImageManagerKit+AFNetworking.h"
-#import "DFImageManager/DFImageManagerKit+GIF.h"
+#import "FLADPageView.h"
+#import "FLADAnimatedImageView.h"
+
+
 #define DefaultDotHeight 15
 #define DefaultAutoScrollTimeInterval 3
 @interface FLADPageView()
@@ -132,18 +132,14 @@
     UIView *lastView;
     
     for (int i = 0; i < [dataSource count] + 2; i++) {
-        DFAnimatedImageView *imageView = [[DFAnimatedImageView alloc]init];
-        
-//        imageView.contentMode = UIViewContentModeScaleToFill;
+        FLADAnimatedImageView *imageView = [[FLADAnimatedImageView alloc]init];
+
         if (i == 0) {
             [self loadImageView:imageView UrlString:dataSource[([dataSource count] - 1)]];
-//            imageView.image = [UIImage imageNamed:dataSource.lastObject];
         }else if (i == [dataSource count] + 1) {
             [self loadImageView:imageView UrlString:dataSource[0]];
-//            imageView.image = [UIImage imageNamed:dataSource.firstObject];
         }else{
             [self loadImageView:imageView UrlString:dataSource[i-1]];
-//            imageView.image = [UIImage imageNamed:dataSource[i-1]];
         }
         
         [self.scrollView addSubview:imageView];
@@ -159,20 +155,10 @@
 
 }
 
-- (DFImageView *)createImageViewWithUrlString:(NSString *)urlString{
-    DFImageView *imageView;
-    if ([[urlString pathExtension]isEqualToString:@"gif"]) {
-        imageView = [[DFImageView alloc]init];
-    }else{
-        imageView = [[DFAnimatedImageView alloc]init];
-    }
-    return imageView;
-}
-
-
 - (void)loadImageView:(DFImageView *)imageView UrlString:(NSString *)urlString{
     
     [imageView prepareForReuse];
+    
     [imageView setImageWithResource:[NSURL  URLWithString:urlString] targetSize:DFImageMaximumSize contentMode:DFImageContentModeAspectFill options:nil];
 }
 

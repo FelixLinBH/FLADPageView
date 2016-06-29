@@ -7,12 +7,13 @@
 //
 
 #import "FLAppDelegate.h"
-
+#import "DFImageManager/DFImageManagerKit.h"
 @implementation FLAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    [[DFImageManager sharedManager] removeAllCachedImages];
     return YES;
 }
 
