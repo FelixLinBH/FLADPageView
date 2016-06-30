@@ -7,7 +7,6 @@
 //
 
 #import "FLCircularLoadingView.h"
-
 @interface FLCircularLoadingView()
 @property (nonatomic) CAShapeLayer *circleShapeLayer;
 @property (nonatomic) CGFloat circleRadius;
@@ -16,6 +15,10 @@
 
 
 @implementation FLCircularLoadingView
+
+- (void)setStrokeColor:(UIColor *)strokeColor{
+    _circleShapeLayer.strokeColor = strokeColor.CGColor;
+}
 
 - (CGFloat)progress{
     return _circleShapeLayer.strokeEnd;
@@ -53,6 +56,7 @@
     _circleShapeLayer.lineWidth = 2.0;
     _circleShapeLayer.fillColor = [UIColor clearColor].CGColor;
     _circleShapeLayer.strokeColor = [UIColor redColor].CGColor;
+    
     [self.layer addSublayer:_circleShapeLayer];
     self.backgroundColor = [UIColor clearColor];
     self.progress = 0;

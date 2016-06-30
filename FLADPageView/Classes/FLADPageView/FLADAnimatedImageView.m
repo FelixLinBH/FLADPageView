@@ -34,7 +34,7 @@
 - (void)updateConstraints{
     [self.loadingView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self);
-        make.height.and.width.mas_equalTo(20);
+        make.height.and.width.mas_equalTo(0);
     }];
     
     [super updateConstraints];
@@ -57,6 +57,10 @@
         [self.loadingView setProgress:_currentProgress.fractionCompleted];
         [currentProgress addObserver:self forKeyPath:@"fractionCompleted" options:kNilOptions context:nil];
     }
+}
+
+- (void)setCircleWithColor:(UIColor *)color{
+    self.loadingView.strokeColor = color;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {

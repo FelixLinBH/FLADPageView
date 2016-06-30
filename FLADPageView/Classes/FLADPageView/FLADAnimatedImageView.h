@@ -11,5 +11,5 @@
 #import "DFImageManager/DFImageManagerKit+GIF.h"
 
 @interface FLADAnimatedImageView : DFAnimatedImageView
-
+- (void)setCircleWithColor:(UIColor *)color;
 @end

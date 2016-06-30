@@ -18,6 +18,7 @@
 @property (nonatomic) UIImage *dotImage;
 @property (nonatomic) UIImage *currentDotImage;
 @property (nonatomic, strong) NSArray *dataSource;
+@property (nonatomic, strong) NSArray *circleColor;
 @property (nonatomic) CGFloat dotHeight;
 @property (nonatomic, assign) BOOL autoScroll;
 @property (nonatomic) CGFloat autoScrollTimeInterval;

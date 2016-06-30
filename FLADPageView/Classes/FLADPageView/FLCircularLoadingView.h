@@ -10,5 +10,6 @@
 
 @interface FLCircularLoadingView : UIView
 @property (nonatomic) CGFloat progress;
+@property (nonatomic) UIColor *strokeColor;
 - (void)reveal;
 @end

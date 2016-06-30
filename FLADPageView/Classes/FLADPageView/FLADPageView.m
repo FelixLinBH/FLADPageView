@@ -15,6 +15,7 @@
 
 #define DefaultDotHeight 15
 #define DefaultAutoScrollTimeInterval 3
+
 @interface FLADPageView()
 @property (nonatomic) UIScrollView *scrollView;
 @property (nonatomic) TAPageControl *pageControl;
@@ -134,13 +135,17 @@
     
     for (int i = 0; i < [dataSource count] + 2; i++) {
         FLADAnimatedImageView *imageView = [[FLADAnimatedImageView alloc]init];
-
+        
         if (i == 0) {
-            [self loadImageView:imageView UrlString:dataSource[([dataSource count] - 1)]];
+            [self setAnimationCircleColorWithImageView:imageView index:([dataSource count] - 1)];
+//            [self loadImageView:imageView UrlString:dataSource[([dataSource count] - 1)]];
         }else if (i == [dataSource count] + 1) {
-            [self loadImageView:imageView UrlString:dataSource[0]];
+//            [self loadImageView:imageView UrlString:dataSource[0]];
+            [self setAnimationCircleColorWithImageView:imageView index:0];
         }else{
-            [self loadImageView:imageView UrlString:dataSource[i-1]];
+            [self setAnimationCircleColorWithImageView:imageView index:(i-1)];
+            
+//            [self loadImageView:imageView UrlString:dataSource[i-1]];
         }
         
         [self.scrollView addSubview:imageView];
@@ -154,6 +159,13 @@
         lastView = imageView;
     }
 
+}
+
+- (void)setAnimationCircleColorWithImageView:(FLADAnimatedImageView *)imageView index:(NSInteger)index{
+    if ([self.circleColor count] == [self.dataSource count]) {
+        [imageView setCircleWithColor:self.circleColor[index]];
+    }
+    [self loadImageView:imageView UrlString:self.dataSource[index]];
 }
 
 - (void)loadImageView:(DFImageView *)imageView UrlString:(NSString *)urlString{
