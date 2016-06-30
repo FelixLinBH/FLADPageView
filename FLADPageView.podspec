@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
   # s.screenshots     = 'https://github.com/FelixLinBH/FLADPageView/blob/master/1.gif?raw=true', 'https://github.com/FelixLinBH/FLADPageView/blob/master/2.gif?raw=true'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Felix' => 'fly_81211@hotmail.com' }
-  s.source           = { :git => 'https://github.com/FelixLinBH/FLADPageView', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/FelixLinBH/FLADPageView.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
