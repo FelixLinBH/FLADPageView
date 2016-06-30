@@ -2,16 +2,17 @@
 //  FLADAnimatedImageView.m
 //  Pods
 //
-//  Created by TWFeilx on 2016/6/29.
+//  Created by Feilx on 2016/6/29.
 //
 //
 
 #import "FLADAnimatedImageView.h"
+#import "FLCircularLoadingView.h"
 #import "Masonry.h"
 
 @interface FLADAnimatedImageView()
-@property (nonatomic, readonly) UIProgressView *progressView;
 @property (nonatomic) NSProgress *currentProgress;
+@property (nonatomic) FLCircularLoadingView *loadingView;
 
 @end
 
@@ -24,17 +25,16 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        _progressView = [[UIProgressView alloc]init];
-
-        [self addSubview:_progressView];
+        _loadingView = [[FLCircularLoadingView alloc]init];
+        [self addSubview:_loadingView];
     }
     return self;
 }
 
 - (void)updateConstraints{
-    [self.progressView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.loadingView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self);
-        make.height.and.with.mas_equalTo(40);
+        make.height.and.width.mas_equalTo(20);
     }];
     
     [super updateConstraints];
@@ -43,8 +43,9 @@
 - (void)setImageWithResource:(id)resource targetSize:(CGSize)targetSize contentMode:(DFImageContentMode)contentMode options:(DFImageRequestOptions *)options{
     [super setImageWithResource:resource targetSize:targetSize contentMode:contentMode options:options];
     self.currentProgress = self.imageTask.progress;
+    
     if (self.imageTask.state == DFImageTaskStateCompleted) {
-        self.progressView.alpha = 0;
+        self.loadingView.alpha = 0;
     }
 
 }
@@ -53,7 +54,7 @@
     if (_currentProgress != currentProgress) {
         [_currentProgress removeObserver:self forKeyPath:@"fractionCompleted" context:nil];
         _currentProgress = currentProgress;
-        [self.progressView setProgress:currentProgress.fractionCompleted];
+        [self.loadingView setProgress:_currentProgress.fractionCompleted];
         [currentProgress addObserver:self forKeyPath:@"fractionCompleted" options:kNilOptions context:nil];
     }
 }
@@ -61,12 +62,9 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if (object == _currentProgress) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.progressView setProgress:_currentProgress.fractionCompleted animated:YES];
-            NSLog(@"%f",_currentProgress.fractionCompleted);
+            [self.loadingView setProgress:_currentProgress.fractionCompleted];
             if (_currentProgress.fractionCompleted == 1) {
-                [UIView animateWithDuration:0.2 animations:^{
-                    self.progressView.alpha = 0;
-                }];
+                [self.loadingView reveal];
             }
         });
     } else {
@@ -74,12 +72,5 @@
     }
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 
 @end

@@ -100,6 +100,7 @@
 - (void)setDataSource:(NSArray *)dataSource{
     _dataSource = dataSource;
     _pageControl.numberOfPages = dataSource.count;
+    _pageControl.alpha = (dataSource.count == 1) ? 0:1;
     [self addContentView:dataSource];
 }
 
