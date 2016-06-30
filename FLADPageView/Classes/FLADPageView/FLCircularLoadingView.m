@@ -16,6 +16,7 @@
 
 
 @implementation FLCircularLoadingView
+
 - (CGFloat)progress{
     return _circleShapeLayer.strokeEnd;
 }
@@ -102,22 +103,16 @@
     CGRect outerRect = CGRectInset([self getCircleFrameWithBounds:self.superview.bounds], -radiusInset, -radiusInset);
     
     CGPathRef toPath = [UIBezierPath bezierPathWithOvalInRect:outerRect].CGPath;
-
     
     CGPathRef fromPath = [self circlePathWithView:self.superview].CGPath;
     CGFloat fromLineWidth = _circleShapeLayer.lineWidth;
     
-    [CATransaction begin];
-    [CATransaction setValue:kCFBooleanTrue forKey:kCATransactionDisableActions];
-    _circleShapeLayer.lineWidth = 2*finalRadius;
-    _circleShapeLayer.path = toPath;
-    [CATransaction commit];
-    
     CABasicAnimation *lineWithAnimation = [CABasicAnimation animationWithKeyPath:@"lineWidth"];
     lineWithAnimation.fromValue = [NSNumber numberWithFloat:fromLineWidth];
-    lineWithAnimation.toValue = [NSNumber numberWithFloat:2 * finalRadius];
-
+    lineWithAnimation.toValue = [NSNumber numberWithFloat:finalRadius * 2];
+    
     CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
+    
     pathAnimation.fromValue = (__bridge id)fromPath;
     pathAnimation.toValue = (__bridge id)toPath;
     
@@ -131,6 +126,7 @@
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag{
     self.superview.layer.mask = nil;
+    _circleShapeLayer = nil;
 }
 /*
 // Only override drawRect: if you perform custom drawing.
