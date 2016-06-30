@@ -56,6 +56,14 @@ adView.dataSource = @[@"https://..../a.jpg",@"https://.../b.jpg",@"http://.../c.
 
 ```
 
+##Screen shot
+
+![Editor preferences pane](https://github.com/FelixLinBH/FLADPageView/blob/master/1.gif?raw=true)
+
+![Editor preferences pane](https://github.com/FelixLinBH/FLADPageView/blob/master/2.gif?raw=true)
+
+![Editor preferences pane](https://github.com/FelixLinBH/FLADPageView/blob/master/3.gif?raw=true)
+
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
