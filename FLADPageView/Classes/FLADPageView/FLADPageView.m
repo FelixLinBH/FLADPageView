@@ -138,14 +138,10 @@
         
         if (i == 0) {
             [self setAnimationCircleColorWithImageView:imageView index:([dataSource count] - 1)];
-//            [self loadImageView:imageView UrlString:dataSource[([dataSource count] - 1)]];
         }else if (i == [dataSource count] + 1) {
-//            [self loadImageView:imageView UrlString:dataSource[0]];
             [self setAnimationCircleColorWithImageView:imageView index:0];
         }else{
             [self setAnimationCircleColorWithImageView:imageView index:(i-1)];
-            
-//            [self loadImageView:imageView UrlString:dataSource[i-1]];
         }
         
         [self.scrollView addSubview:imageView];
