@@ -2,7 +2,7 @@
 //  FLADAnimatedImageView.h
 //  Pods
 //
-//  Created by TWFeilx on 2016/6/29.
+//  Created by Feilx on 2016/6/29.
 //
 //
 #import "DFImageManager/DFImageManagerKit.h"
