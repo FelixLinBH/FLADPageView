@@ -16,7 +16,7 @@
 #define DefaultDotHeight 15
 #define DefaultAutoScrollTimeInterval 3
 
-@interface FLADPageView()<UIScrollViewDelegate>
+@interface FLADPageView()<UIScrollViewDelegate,TAPageControlDelegate>
 @property (nonatomic) UIScrollView *scrollView;
 @property (nonatomic) TAPageControl *pageControl;
 @property (nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
